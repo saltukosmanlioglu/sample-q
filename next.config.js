@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_APP_API: "http://localhost:3000/api",
+    NEXT_APP_API: "http://www.omdbapi.com/?i=tt3896198&apikey=a6f3388",
   },
   reactStrictMode: true,
   swcMinify: true,

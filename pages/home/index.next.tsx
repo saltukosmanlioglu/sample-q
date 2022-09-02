@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 
 import Main from "@/layout/main";
+import showsService from "@/services/shows";
 
 import * as Styled from "./Home.styled";
-import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const router = useRouter();
   console.log(router.query);
 
+  useEffect(() => {
+    showsService
+      .list()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(() => {});
+  }, []);
+
   return (
     <Main pageTitle="Home - Q">
-      <Styled.Home>Home</Styled.Home>
+      <Styled.Home>
+        <Styled.Header>
+          <b>SOME OF TV SHOWS</b>
+        </Styled.Header>
+      </Styled.Home>
     </Main>
   );
 };
