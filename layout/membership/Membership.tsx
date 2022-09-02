@@ -1,12 +1,21 @@
 import React from "react";
+import Head from "next/head";
 
 import { MembershipProps } from "./types";
 import * as Styled from "./Membership.styled";
 
-const Membership: React.FunctionComponent<MembershipProps> = () => {
+const Membership: React.FunctionComponent<MembershipProps> = ({
+  children,
+  pageTitle,
+}) => {
   return (
     <Styled.Membership>
-      <Styled.Wrapper>Membership</Styled.Wrapper>
+      <Head>
+        <title>{pageTitle}</title>
+      </Head>
+      <Styled.Main>
+        <Styled.Wrapper>{children}</Styled.Wrapper>
+      </Styled.Main>
     </Styled.Membership>
   );
 };

@@ -5,8 +5,8 @@ import Membership from "@/layout/membership";
 
 const Login: NextPage = () => {
   return (
-    <Membership>
-      <div></div>
+    <Membership pageTitle="Login - Q">
+      <div>Login</div>
     </Membership>
   );
 };
