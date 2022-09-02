@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
+      "@/constants/*": ["constants/*"],
       "@/components/*": ["components/*"],
       "@/layout/*": ["layout/*"],
       "@/pages/*": ["pages/*"],
