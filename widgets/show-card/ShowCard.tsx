@@ -5,30 +5,20 @@ import * as Styled from "./ShowCard.styled";
 
 const ShowCard: React.FunctionComponent<ShowCardProps> = ({
   Actors,
-  Awards,
-  BoxOffice,
   Country,
   Director,
-  DVD,
   Genre,
-  imdbID,
   imdbRating,
   imdbVotes,
   Language,
-  Metascore,
   Plot,
   Poster,
-  Production,
-  Rated,
   Ratings,
   Released,
-  Response,
   Runtime,
   Title,
   Type,
-  Website,
   Writer,
-  Year,
 }) => {
   return (
     <Styled.ShowCard>
@@ -38,6 +28,9 @@ const ShowCard: React.FunctionComponent<ShowCardProps> = ({
           <div>
             <b>{Title}</b>
             <p>{Plot}</p>
+            <b>
+              Country: <span>{Country}</span>
+            </b>
             <b>
               Genre: <span>{Genre}</span>
             </b>

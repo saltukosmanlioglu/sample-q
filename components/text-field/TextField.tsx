@@ -15,7 +15,11 @@ const TextField: React.FunctionComponent<TextFieldProps> = ({
   const [error, setError] = useState<boolean>(false);
 
   const onBlur = useCallback(() => {
-    required && value.length === 0 ? setError(true) : setError(false);
+    if (required && value.length === 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
   }, [value]);
 
   return (

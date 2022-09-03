@@ -17,6 +17,10 @@ const Home: NextPage = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
       .finally(() => {});
+
+    fetch("https://api.themoviedb.org/4/list", {
+      method: "GET",
+    }).then((res) => console.log(res));
   }, []);
 
   return (

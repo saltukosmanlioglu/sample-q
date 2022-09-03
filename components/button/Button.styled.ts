@@ -10,4 +10,8 @@ export const Button = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  svg {
+    margin-left: 20px;
+  }
 `;

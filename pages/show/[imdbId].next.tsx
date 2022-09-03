@@ -4,6 +4,8 @@ import type { NextPage } from "next";
 
 import Main from "@/layout/main";
 import showsService, { ShowsResponse } from "@/services/shows";
+import sendEmailService, { SendEmailRequest } from "@/services/send-email";
+import SendEmail from "@/widgets/send-email";
 import ShowCard from "@/widgets/show-card";
 
 import * as Styled from "./Show.styled";
@@ -12,6 +14,13 @@ const Show: NextPage = () => {
   const [show, setShow] = useState<ShowsResponse>();
 
   const router = useRouter();
+
+  const sendEmail = (values: SendEmailRequest) => {
+    sendEmailService
+      .sendEmail(values)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     showsService
@@ -25,6 +34,7 @@ const Show: NextPage = () => {
     <Main pageTitle={`${show.Title} - Q`}>
       <Styled.Show>
         <ShowCard {...show} />
+        <SendEmail onSubmit={sendEmail} />
       </Styled.Show>
     </Main>
   ) : null;
