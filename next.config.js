@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_APP_API: "http://www.omdbapi.com/?i=tt3896198&apikey=a6f3388",
+    NEXT_APP_API:
+      "https://api.themoviedb.org/4/list/1",
     NEXT_APP_LOCAL_API: "http://localhost:3000/api/",
   },
   reactStrictMode: true,

@@ -1,16 +1,16 @@
-import { LocalStorageLoadProps, KeyValueProps } from "./types";
+import { LocalStorageGetItemProps, KeyValueProps } from "./types";
 
-export const localStorageSetItem = async ({ key, value }: KeyValueProps) => {
+export const localStorageSetItem = ({ key, value }: KeyValueProps) => {
   try {
-    await localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const localStorageGetItem = async ({ key }: LocalStorageLoadProps) => {
+export const localStorageGetItem = ({ key }: LocalStorageGetItemProps) => {
   try {
-    await localStorage.getItem(key);
+    localStorage.getItem(key);
   } catch (error) {
     console.log(error);
   }

@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 
-import {
-  localStorageGetItem,
-  localStorageSetItem,
-} from "@/app/funcs/local-storage";
+import { localStorageSetItem } from "@/app/funcs/local-storage";
 import { UserProps } from "@/app/types";
 import Main from "@/layout/main";
 import showsService, { ShowsResponse } from "@/services/shows";
@@ -74,7 +71,10 @@ const Show: NextPage = () => {
   }, []);
 
   return show ? (
-    <Main pageTitle={`${show.Title} - Q`}>
+    <Main
+      headerProps={{ title: `${show.Title}` }}
+      pageTitle={`${show.Title} - Q`}
+    >
       <Styled.Show>
         <ShowCard {...show} />
         <Styled.OtherOptions>

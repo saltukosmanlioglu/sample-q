@@ -3,6 +3,6 @@ export interface KeyValueProps {
   value: unknown;
 }
 
-export interface LocalStorageLoadProps {
+export interface LocalStorageGetItemProps {
   key: string;
 }
