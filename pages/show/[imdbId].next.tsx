@@ -6,6 +6,8 @@ import Main from "@/layout/main";
 import showsService, { ShowsResponse } from "@/services/shows";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
 import Comment from "@/widgets/comment";
+import CommentMade from "@/widgets/comment-made";
+import FavoriteShow from "@/widgets/favorite-show";
 import SendEmail from "@/widgets/send-email";
 import ShowCard from "@/widgets/show-card";
 
@@ -16,14 +18,16 @@ const Show: NextPage = () => {
 
   const router = useRouter();
 
+  const addMyFavoriteShows = () => {};
+
+  const createComment = () => {};
+
   const sendEmail = (values: SendEmailRequest) => {
     sendEmailService
       .sendEmail(values)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-
-  const createComment = () => {};
 
   useEffect(() => {
     showsService
@@ -37,11 +41,18 @@ const Show: NextPage = () => {
     <Main pageTitle={`${show.Title} - Q`}>
       <Styled.Show>
         <ShowCard {...show} />
-        <SendEmail onSubmit={sendEmail} />
+        <Styled.OtherOptions>
+          <FavoriteShow onSubmit={addMyFavoriteShows} />
+          <div>
+            <SendEmail onSubmit={sendEmail} />
+          </div>
+        </Styled.OtherOptions>
         <Comment onSubmit={createComment} />
-        <div>
-          <b>Comments</b>
-        </div>
+        <CommentMade
+          id={"1"}
+          username="Saltuk Eren"
+          comment="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore, est nemo, aspernatur, saepe dolore dolorem illo tempore mollitia in sint architecto iste. A, quae perferendis iste nostrum tempora nam libero!"
+        />
       </Styled.Show>
     </Main>
   ) : null;
