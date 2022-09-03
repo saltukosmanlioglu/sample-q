@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import Main from "@/layout/main";
 import showsService, { ShowsResponse } from "@/services/shows";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
+import Comment from "@/widgets/comment";
 import SendEmail from "@/widgets/send-email";
 import ShowCard from "@/widgets/show-card";
 
@@ -22,6 +23,8 @@ const Show: NextPage = () => {
       .catch((err) => console.log(err));
   };
 
+  const createComment = () => {};
+
   useEffect(() => {
     showsService
       .list()
@@ -35,6 +38,10 @@ const Show: NextPage = () => {
       <Styled.Show>
         <ShowCard {...show} />
         <SendEmail onSubmit={sendEmail} />
+        <Comment onSubmit={createComment} />
+        <div>
+          <b>Comments</b>
+        </div>
       </Styled.Show>
     </Main>
   ) : null;
