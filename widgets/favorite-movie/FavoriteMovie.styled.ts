@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { colors } from "@/constants/colors";
 
-export const FavoriteShow = styled.button<{ isActive: boolean }>`
+export const FavoriteMovie = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive }) => (isActive ? colors.mainColor : "#fff")};
   padding: 4px;
   border-radius: 4px;

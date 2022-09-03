@@ -3,10 +3,10 @@ import { AiFillStar } from "react-icons/ai";
 
 import { colors } from "@/constants/colors";
 
-import { FavoriteShowProps } from "./types";
-import * as Styled from "./FavoriteShow.styled";
+import { FavoriteMovieProps } from "./types";
+import * as Styled from "./FavoriteMovie.styled";
 
-const FavoriteShow: React.FunctionComponent<FavoriteShowProps> = ({
+const FavoriteMovie: React.FunctionComponent<FavoriteMovieProps> = ({
   onSubmit,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -17,10 +17,10 @@ const FavoriteShow: React.FunctionComponent<FavoriteShowProps> = ({
   };
 
   return (
-    <Styled.FavoriteShow isActive={isActive} onClick={handleClick}>
+    <Styled.FavoriteMovie isActive={isActive} onClick={handleClick}>
       <AiFillStar color={isActive ? "#fff" : colors.mainColor} size={30} />
-    </Styled.FavoriteShow>
+    </Styled.FavoriteMovie>
   );
 };
 
-export default FavoriteShow;
+export default FavoriteMovie;

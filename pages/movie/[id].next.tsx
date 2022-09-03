@@ -9,10 +9,10 @@ import Main from "@/layout/main";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
 import Comment, { CommentRequest } from "@/widgets/comment";
 import CommentMade from "@/widgets/comment-made";
-import FavoriteShow from "@/widgets/favorite-show";
+import FavoriteMovie from "@/widgets/favorite-movie";
+import MovieCard from "@/widgets/movie-card";
 import Popup from "@/widgets/popup";
 import SendEmail from "@/widgets/send-email";
-import MovieCard from "@/widgets/movie-card";
 
 import * as Styled from "./Movie.styled";
 
@@ -28,7 +28,7 @@ const Movie: NextPage = () => {
 
   const router = useRouter();
 
-  const addMyFavoriteShows = () => {};
+  const addMyFavoriteMovies = () => {};
 
   const createComment = (values: CommentRequest) => {
     if (user && comments && values) {
@@ -75,7 +75,7 @@ const Movie: NextPage = () => {
       <Styled.Movie>
         <MovieCard {...movie} />
         <Styled.OtherOptions>
-          <FavoriteShow onSubmit={addMyFavoriteShows} />
+          <FavoriteMovie onSubmit={addMyFavoriteMovies} />
           <SendEmail onSubmit={sendEmail} />
         </Styled.OtherOptions>
         <Comment onSubmit={createComment} />
