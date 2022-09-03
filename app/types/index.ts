@@ -1,1 +1,1 @@
-export type { UserProps } from "./types";
+export type { MovieProps, UserProps } from "./types";

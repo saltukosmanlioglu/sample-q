@@ -36,7 +36,7 @@ const Login: NextPage = () => {
           key: "access_token",
           value: user,
         });
-        router.push(`/home?id=${user.id}`);
+        router.push("/home");
       } else {
         console.log("hata");
         setPopupVisible(true);

@@ -1,39 +1,47 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
 import type { NextPage } from "next";
 
-import useUser from "@/app/hooks/user";
+import { MovieProps } from "@/app/types";
+import MovieCard from "@/components/movie-card";
+import TextField from "@/components/text-field";
+import { movies } from "@/constants/movies";
 import Main from "@/layout/main";
-import showsService from "@/services/shows";
 
 import * as Styled from "./Home.styled";
 
 const Home: NextPage = () => {
-  const router = useRouter();
-  const user = useUser();
+  const [data] = useState<Array<MovieProps>>(movies);
 
-  useEffect(() => {
-    showsService
-      .list()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-      .finally(() => {});
+  const [movieName, setMovieName] = useState<string>("");
 
-    console.log(user);
-  }, []);
+  const fitlerMovies = (movie: MovieProps) => {
+    if (movieName === "") {
+      return movie;
+    } else if (
+      movie.title.toLocaleLowerCase().includes(movieName.toLowerCase())
+    ) {
+      return movie;
+    }
+  };
 
   return (
     <Main
       headerProps={{ title: "ALL OF TV SHOWS IN THE WORLD" }}
       pageTitle="Home - Q"
     >
+      <Styled.Search>
+        <TextField
+          name="movieName"
+          onChange={(e) => setMovieName(e.currentTarget.value)}
+          placeholder="Movie name"
+          type="text"
+          value={movieName}
+        />
+      </Styled.Search>
       <Styled.Home>
-        <button></button>
-        <button></button>
-        <button></button>
-        <button></button>
-        <button></button>
-        <button></button>
+        {data.filter(fitlerMovies).map((movie, index) => (
+          <MovieCard key={index} {...movie} />
+        ))}
       </Styled.Home>
     </Main>
   );

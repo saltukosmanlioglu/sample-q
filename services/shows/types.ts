@@ -36,9 +36,5 @@ export interface ShowsResponse {
 }
 
 export interface ShowsParams {
-  i: string;
-  plot: PlotType;
-  t: string;
-  type: ShowType;
-  y: string;
+  id: number;
 }

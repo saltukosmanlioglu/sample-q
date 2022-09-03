@@ -3,21 +3,21 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 
 import { localStorageSetItem } from "@/app/funcs/local-storage";
-import { UserProps } from "@/app/types";
+import { MovieProps, UserProps } from "@/app/types";
+import { movies } from "@/constants/movies";
 import Main from "@/layout/main";
-import showsService, { ShowsResponse } from "@/services/shows";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
 import Comment, { CommentRequest } from "@/widgets/comment";
 import CommentMade from "@/widgets/comment-made";
 import FavoriteShow from "@/widgets/favorite-show";
 import Popup from "@/widgets/popup";
 import SendEmail from "@/widgets/send-email";
-import ShowCard from "@/widgets/show-card";
+import MovieCard from "@/widgets/movie-card";
 
-import * as Styled from "./Show.styled";
+import * as Styled from "./Movie.styled";
 
-const Show: NextPage = () => {
-  const [show, setShow] = useState<ShowsResponse>();
+const Movie: NextPage = () => {
+  const [movie, setMovie] = useState<MovieProps>();
   const [comments, setComments] = useState<Array<CommentRequest>>();
   const [user, setUser] = useState<UserProps>();
 
@@ -35,7 +35,7 @@ const Show: NextPage = () => {
       comments.push({
         ...values,
         createdDate: new Date().toLocaleDateString(),
-        imdbId: String(router.query.imdbId),
+        movieId: Number(router.query.id),
         userId: user.id,
       });
 
@@ -45,8 +45,6 @@ const Show: NextPage = () => {
       });
 
       setCommentPopupVisible(true);
-    } else {
-      // setCommentPopupVisible(true);
     }
   };
 
@@ -59,48 +57,43 @@ const Show: NextPage = () => {
   };
 
   useEffect(() => {
-    showsService
-      .list()
-      .then((res) => setShow(res.data))
-      .catch((err) => console.log(err));
-  }, [router.query.imdbId]);
+    movies.find((movie) =>
+      movie.id === Number(router.query.id) ? setMovie(movie) : null
+    );
+  }, [router.query.id]);
 
   useEffect(() => {
     setComments(JSON.parse(localStorage.getItem("comments") || "[]"));
     setUser(JSON.parse(localStorage.getItem("access_token") || "{}"));
   }, []);
 
-  return show ? (
+  return movie ? (
     <Main
-      headerProps={{ title: `${show.Title}` }}
-      pageTitle={`${show.Title} - Q`}
+      headerProps={{ title: `${movie.title}` }}
+      pageTitle={`${movie.title} - Q`}
     >
-      <Styled.Show>
-        <ShowCard {...show} />
+      <Styled.Movie>
+        <MovieCard {...movie} />
         <Styled.OtherOptions>
           <FavoriteShow onSubmit={addMyFavoriteShows} />
-          <div>
-            <SendEmail onSubmit={sendEmail} />
-          </div>
+          <SendEmail onSubmit={sendEmail} />
         </Styled.OtherOptions>
         <Comment onSubmit={createComment} />
         {comments &&
           comments
-            .filter((comment) => comment.imdbId === String(router.query.imdbId))
+            .filter((comment) => comment.movieId === Number(router.query.id))
             .sort((a, b) => (b.createdDate > a.createdDate ? 1 : -1))
             .map((comment, index) =>
               user ? (
                 <CommentMade
                   key={index}
                   activeUser={user}
-                  comment={comment.comment}
-                  createdDate={comment.createdDate}
-                  userId={comment.userId}
+                  {...comment}
                   username="Saltuk Eren"
                 />
               ) : null
             )}
-      </Styled.Show>
+      </Styled.Movie>
       <Popup
         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam debitis alias earum rem provident libero. Culpa, ut tempore repellendus fugit et, amet, ducimus voluptatum quibusdam necessitatibus reprehenderit distinctio nostrum illo?"
         setVisible={setMailPopupVisible}
@@ -123,4 +116,4 @@ const Show: NextPage = () => {
   ) : null;
 };
 
-export default Show;
+export default Movie;

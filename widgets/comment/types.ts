@@ -5,6 +5,6 @@ export interface CommentProps {
 export interface CommentRequest {
   comment: string;
   createdDate: string;
-  imdbId: string;
+  movieId: number;
   userId: string;
 }

@@ -13,7 +13,7 @@ const Comment: React.FunctionComponent<CommentProps> = ({ onSubmit }) => {
     initialValues: {
       comment: "",
       createdDate: "",
-      imdbId: "",
+      movieId: 0,
       userId: "",
     },
   });
