@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 import { colors } from "@/constants/colors";
@@ -9,9 +9,16 @@ import * as Styled from "./FavoriteShow.styled";
 const FavoriteShow: React.FunctionComponent<FavoriteShowProps> = ({
   onSubmit,
 }) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setIsActive(!isActive);
+    onSubmit();
+  };
+
   return (
-    <Styled.FavoriteShow onClick={onSubmit}>
-      <AiFillStar size={30} color={colors.mainColor} />
+    <Styled.FavoriteShow isActive={isActive} onClick={handleClick}>
+      <AiFillStar color={isActive ? "#fff" : colors.mainColor} size={30} />
     </Styled.FavoriteShow>
   );
 };

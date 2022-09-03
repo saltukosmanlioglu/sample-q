@@ -12,6 +12,7 @@ import Popup from "@/widgets/popup";
 
 import { LoginRequest } from "./types";
 import * as Styled from "./Login.styled";
+import { localStorageSetItem } from "@/app/funcs/local-storage";
 
 const Login: NextPage = () => {
   const [users, setUsers] = useState<Array<any>>();
@@ -31,7 +32,10 @@ const Login: NextPage = () => {
         user.username === form.values.username &&
         user.password === form.values.password
       ) {
-        console.log("basari");
+        localStorageSetItem({
+          key: "access_token",
+          value: user,
+        });
         router.push(`/home?id=${user.id}`);
       } else {
         console.log("hata");

@@ -4,8 +4,10 @@ import { CommentMadeProps } from "./types";
 import * as Styled from "./CommentMade.styled";
 
 const CommentMade: React.FunctionComponent<CommentMadeProps> = ({
-  id,
+  activeUser,
   comment,
+  createdDate,
+  userId,
   username,
 }) => {
   return (
@@ -13,7 +15,8 @@ const CommentMade: React.FunctionComponent<CommentMadeProps> = ({
       <b style={{ marginTop: 40, fontSize: 25 }}>Comments</b>
       <div>
         <b>
-          {username} <span>Your comment</span>
+          {username} - <span>{new Date(createdDate).toLocaleDateString()}</span>{" "}
+          {userId === activeUser.id ? <span>Your comment</span> : null}
         </b>
         <p>{comment}</p>
       </div>

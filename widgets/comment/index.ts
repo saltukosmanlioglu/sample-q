@@ -1,3 +1,3 @@
 export { default } from "./Comment";
 
-export type { CommentProps } from "./types";
+export type { CommentProps, CommentRequest } from "./types";

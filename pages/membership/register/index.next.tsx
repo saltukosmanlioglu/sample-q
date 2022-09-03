@@ -12,8 +12,6 @@ import Membership from "@/layout/membership";
 import { LoginRequest } from "./types";
 import * as Styled from "./Register.styled";
 
-declare const window: Window;
-
 const Register: NextPage = () => {
   const [users, setUsers] = useState<Array<LoginRequest>>();
   const [popupVisible, setPopupVisible] = useState<boolean>(false);

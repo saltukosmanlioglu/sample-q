@@ -5,13 +5,16 @@ import useForm from "@/app/hooks/form";
 import Button from "@/components/button";
 import Textarea from "@/components/textarea";
 
-import { CommentProps } from "./types";
+import { CommentProps, CommentRequest } from "./types";
 import * as Styled from "./Comment.styled";
 
 const Comment: React.FunctionComponent<CommentProps> = ({ onSubmit }) => {
-  const form = useForm({
+  const form = useForm<CommentRequest>({
     initialValues: {
       comment: "",
+      createdDate: "",
+      imdbId: "",
+      userId: "",
     },
   });
 

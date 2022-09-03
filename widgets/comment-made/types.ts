@@ -1,5 +1,9 @@
+import { UserProps } from "@/app/types";
+
 export interface CommentMadeProps {
-  id: string;
   comment: string;
+  createdDate: string;
+  activeUser: UserProps;
+  userId: string;
   username: string;
 }

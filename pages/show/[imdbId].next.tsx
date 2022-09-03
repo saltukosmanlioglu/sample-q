@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 
+import {
+  localStorageGetItem,
+  localStorageSetItem,
+} from "@/app/funcs/local-storage";
+import { UserProps } from "@/app/types";
 import Main from "@/layout/main";
 import showsService, { ShowsResponse } from "@/services/shows";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
-import Comment from "@/widgets/comment";
+import Comment, { CommentRequest } from "@/widgets/comment";
 import CommentMade from "@/widgets/comment-made";
 import FavoriteShow from "@/widgets/favorite-show";
 import Popup from "@/widgets/popup";
@@ -16,6 +21,9 @@ import * as Styled from "./Show.styled";
 
 const Show: NextPage = () => {
   const [show, setShow] = useState<ShowsResponse>();
+  const [comments, setComments] = useState<Array<CommentRequest>>();
+  const [user, setUser] = useState<UserProps>();
+
   const [mailPopupVisible, setMailPopupVisible] = useState<boolean>(false);
   const [favoriPopupVisible, setFavoriPopupVisible] = useState<boolean>(false);
   const [commentPopupVisible, setCommentPopupVisible] =
@@ -25,7 +33,25 @@ const Show: NextPage = () => {
 
   const addMyFavoriteShows = () => {};
 
-  const createComment = () => {};
+  const createComment = (values: CommentRequest) => {
+    if (user && comments && values) {
+      comments.push({
+        ...values,
+        createdDate: new Date().toLocaleDateString(),
+        imdbId: String(router.query.imdbId),
+        userId: user.id,
+      });
+
+      localStorageSetItem({
+        key: "comments",
+        value: [...comments],
+      });
+
+      setCommentPopupVisible(true);
+    } else {
+      // setCommentPopupVisible(true);
+    }
+  };
 
   const sendEmail = (values: SendEmailRequest) => {
     sendEmailService
@@ -42,6 +68,11 @@ const Show: NextPage = () => {
       .catch((err) => console.log(err));
   }, [router.query.imdbId]);
 
+  useEffect(() => {
+    setComments(JSON.parse(localStorage.getItem("comments") || "[]"));
+    setUser(JSON.parse(localStorage.getItem("access_token") || "{}"));
+  }, []);
+
   return show ? (
     <Main pageTitle={`${show.Title} - Q`}>
       <Styled.Show>
@@ -53,11 +84,22 @@ const Show: NextPage = () => {
           </div>
         </Styled.OtherOptions>
         <Comment onSubmit={createComment} />
-        <CommentMade
-          id={"1"}
-          username="Saltuk Eren"
-          comment="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore, est nemo, aspernatur, saepe dolore dolorem illo tempore mollitia in sint architecto iste. A, quae perferendis iste nostrum tempora nam libero!"
-        />
+        {comments &&
+          comments
+            .filter((comment) => comment.imdbId === String(router.query.imdbId))
+            .sort((a, b) => (b.createdDate > a.createdDate ? 1 : -1))
+            .map((comment, index) =>
+              user ? (
+                <CommentMade
+                  key={index}
+                  activeUser={user}
+                  comment={comment.comment}
+                  createdDate={comment.createdDate}
+                  userId={comment.userId}
+                  username="Saltuk Eren"
+                />
+              ) : null
+            )}
       </Styled.Show>
       <Popup
         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam debitis alias earum rem provident libero. Culpa, ut tempore repellendus fugit et, amet, ducimus voluptatum quibusdam necessitatibus reprehenderit distinctio nostrum illo?"
