@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.3",
     "axios": "^0.27.2",
     "dotenv": "^16.0.2",
-    "i": "^0.3.7",
     "next": "12.2.5",
     "nodemailer": "^6.7.8",
     "npm": "^8.19.1",

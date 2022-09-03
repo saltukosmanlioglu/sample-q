@@ -23,6 +23,7 @@ const SendEmail: React.FunctionComponent<SendEmailProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(form.values);
+    setModalVisible(false);
   };
 
   return (

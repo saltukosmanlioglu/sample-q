@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const Popup = styled.div`
-  position: absolute;
+  position: fixed;
   width: 300px;
   bottom: 80px;
   right: 40px;
   border-radius: 12px;
+  background-color: #fff;
   padding: 20px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 

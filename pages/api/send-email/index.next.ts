@@ -8,7 +8,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       service: "gmail",
       auth: {
         user: "saltuk.osmanlioglu@gmail.com",
-        pass: "54e6e2b2935D9",
+        pass: process.env.password,
       },
     });
 
