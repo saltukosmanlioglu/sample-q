@@ -11,7 +11,7 @@ import { HeaderProps } from "./types";
 import * as Styled from "./Header.styled";
 
 const Header: React.FunctionComponent<HeaderProps> = ({ title }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   const router = useRouter();
   const { userInfo } = useUser();
