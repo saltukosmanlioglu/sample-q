@@ -7,4 +7,5 @@ export interface CommentRequest {
   createdDate: string;
   movieId: number;
   userId: string;
+  username: string;
 }

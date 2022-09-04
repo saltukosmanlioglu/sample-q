@@ -3,40 +3,61 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 
 import { localStorageSetItem } from "@/app/funcs/local-storage";
-import { MovieProps, UserProps } from "@/app/types";
+import useUser from "@/app/hooks/user";
+import { MovieProps } from "@/app/types";
 import { movies } from "@/constants/movies";
 import Main from "@/layout/main";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
 import Comment, { CommentRequest } from "@/widgets/comment";
 import CommentMade from "@/widgets/comment-made";
-import FavoriteMovie from "@/widgets/favorite-movie";
+import FavoriteMovie, { FavoriteMovieRequest } from "@/widgets/favorite-movie";
 import MovieCard from "@/widgets/movie-card";
-import Popup from "@/widgets/popup";
 import SendEmail from "@/widgets/send-email";
 
 import * as Styled from "./Movie.styled";
 
 const Movie: NextPage = () => {
   const [movie, setMovie] = useState<MovieProps>();
+
   const [comments, setComments] = useState<Array<CommentRequest>>();
-  const [user, setUser] = useState<UserProps>();
+  const [favorites, setFavorites] = useState<Array<FavoriteMovieRequest>>();
 
-  const [mailPopupVisible, setMailPopupVisible] = useState<boolean>(false);
-  const [favoriPopupVisible, setFavoriPopupVisible] = useState<boolean>(false);
-  const [commentPopupVisible, setCommentPopupVisible] =
-    useState<boolean>(false);
-
+  const { userInfo } = useUser();
   const router = useRouter();
 
-  const addMyFavoriteMovies = () => {};
+  const isFav = favorites?.every(
+    (favorite) =>
+      favorite.userId === userInfo.id &&
+      favorite.movie.id === Number(router.query.id)
+  );
+
+  const addMyFavoriteMovies = () => {
+    if (favorites && movie) {
+      favorites.push({
+        createdDate: new Date().toLocaleDateString(),
+        movie,
+        userId: userInfo.id,
+      });
+
+      localStorageSetItem({
+        key: "favorites",
+        value: [...favorites],
+      });
+    }
+  };
+
+  const removeMyFavoriteMovie = () => {
+    console.log("remove");
+  };
 
   const createComment = (values: CommentRequest) => {
-    if (user && comments && values) {
+    if (comments && values) {
       comments.push({
         ...values,
         createdDate: new Date().toLocaleDateString(),
         movieId: Number(router.query.id),
-        userId: user.id,
+        userId: userInfo.id,
+        username: userInfo.username,
       });
 
       localStorageSetItem({
@@ -44,7 +65,7 @@ const Movie: NextPage = () => {
         value: [...comments],
       });
 
-      setCommentPopupVisible(true);
+      setComments([...comments]);
     }
   };
 
@@ -52,8 +73,7 @@ const Movie: NextPage = () => {
     sendEmailService
       .sendEmail(values)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err))
-      .finally(() => setMailPopupVisible(true));
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -64,7 +84,7 @@ const Movie: NextPage = () => {
 
   useEffect(() => {
     setComments(JSON.parse(localStorage.getItem("comments") || "[]"));
-    setUser(JSON.parse(localStorage.getItem("access_token") || "{}"));
+    setFavorites(JSON.parse(localStorage.getItem("favorites") || "[]"));
   }, []);
 
   return movie ? (
@@ -75,43 +95,38 @@ const Movie: NextPage = () => {
       <Styled.Movie>
         <MovieCard {...movie} />
         <Styled.OtherOptions>
-          <FavoriteMovie onSubmit={addMyFavoriteMovies} />
+          {favorites && (
+            <FavoriteMovie
+              isFavorite={favorites.every(
+                (favorite) =>
+                  favorite.userId === userInfo.id &&
+                  favorite.movie.id === Number(router.query.id)
+              )}
+              onAdd={addMyFavoriteMovies}
+              onRemove={removeMyFavoriteMovie}
+            />
+          )}
           <SendEmail onSubmit={sendEmail} />
         </Styled.OtherOptions>
         <Comment onSubmit={createComment} />
+        <b style={{ fontSize: 25 }}>Comments</b>
         {comments &&
+        comments.length > 0 &&
+        comments.find(
+          (comment) => comment.movieId === Number(router.query.id)
+        ) ? (
           comments
             .filter((comment) => comment.movieId === Number(router.query.id))
             .sort((a, b) => (b.createdDate > a.createdDate ? 1 : -1))
-            .map((comment, index) =>
-              user ? (
-                <CommentMade
-                  key={index}
-                  activeUser={user}
-                  {...comment}
-                  username="Saltuk Eren"
-                />
-              ) : null
-            )}
+            .map((comment, index) => (
+              <CommentMade key={index} activeUser={userInfo} {...comment} />
+            ))
+        ) : (
+          <p style={{ textAlign: "center", fontSize: 20, marginTop: 20 }}>
+            Be the first to comment
+          </p>
+        )}
       </Styled.Movie>
-      <Popup
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam debitis alias earum rem provident libero. Culpa, ut tempore repellendus fugit et, amet, ducimus voluptatum quibusdam necessitatibus reprehenderit distinctio nostrum illo?"
-        setVisible={setMailPopupVisible}
-        title="Mail sending status"
-        visible={mailPopupVisible}
-      />
-      <Popup
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam debitis alias earum rem provident libero. Culpa, ut tempore repellendus fugit et, amet, ducimus voluptatum quibusdam necessitatibus reprehenderit distinctio nostrum illo?"
-        setVisible={setFavoriPopupVisible}
-        title="Favorite added status"
-        visible={favoriPopupVisible}
-      />
-      <Popup
-        description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam debitis alias earum rem provident libero. Culpa, ut tempore repellendus fugit et, amet, ducimus voluptatum quibusdam necessitatibus reprehenderit distinctio nostrum illo?"
-        setVisible={setCommentPopupVisible}
-        title="Comment added status"
-        visible={commentPopupVisible}
-      />
     </Main>
   ) : null;
 };

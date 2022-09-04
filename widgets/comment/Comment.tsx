@@ -15,6 +15,7 @@ const Comment: React.FunctionComponent<CommentProps> = ({ onSubmit }) => {
       createdDate: "",
       movieId: 0,
       userId: "",
+      username: "",
     },
   });
 

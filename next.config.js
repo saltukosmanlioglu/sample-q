@@ -6,7 +6,7 @@ const nextConfig = {
     NEXT_APP_CDN_API: "https://image.tmdb.org/t/p/w500",
   },
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: false,
   pageExtensions: ["next.tsx", "next.ts"],
   async redirects() {
     return [

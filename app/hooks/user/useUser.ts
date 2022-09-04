@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { localStorageGetItem } from "@/app/funcs/local-storage";
 import { UserProps } from "@/app/types";
 
 const useUser = () => {
-  const [userInfo, setUserInfo] = useState<UserProps>();
+  const [userInfo, setUserInfo] = useState<Omit<UserProps, "password">>({
+    id: "",
+    username: "",
+  });
 
   const router = useRouter();
 
   useEffect(() => {
-    setUserInfo(
-      JSON.stringify(localStorageGetItem({ key: "access_token" })) as any
-    );
+    setUserInfo(JSON.parse(localStorage.getItem("access_token") || "{}"));
   }, [router]);
 
   return { userInfo };

@@ -12,7 +12,6 @@ const CommentMade: React.FunctionComponent<CommentMadeProps> = ({
 }) => {
   return (
     <Styled.CommentMade>
-      <b style={{ marginTop: 40, fontSize: 25 }}>Comments</b>
       <div>
         <b>
           {username} - <span>{new Date(createdDate).toLocaleDateString()}</span>{" "}

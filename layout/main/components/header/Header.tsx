@@ -28,7 +28,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ title }) => {
         <b>{title}</b>
         <Styled.Menu>
           <Styled.Profile onClick={() => setIsActive(!isActive)}>
-            <p>{userInfo?.username || "Saltuk Eren"}</p>
+            <p>{userInfo.username}</p>
             <RiArrowDownSLine size={25} color={colors.mainColor} />
           </Styled.Profile>
           {isActive && (

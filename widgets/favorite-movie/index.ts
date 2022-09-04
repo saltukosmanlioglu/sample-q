@@ -1,3 +1,3 @@
 export { default } from "./FavoriteMovie";
 
-export type { FavoriteMovieProps } from "./types";
+export type { FavoriteMovieProps, FavoriteMovieRequest } from "./types";
