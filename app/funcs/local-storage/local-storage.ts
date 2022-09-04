@@ -7,11 +7,3 @@ export const localStorageSetItem = ({ key, value }: KeyValueProps) => {
     console.log(error);
   }
 };
-
-export const localStorageGetItem = ({ key }: Pick<KeyValueProps, "key">) => {
-  try {
-    localStorage.getItem(key);
-  } catch (error) {
-    console.log(error);
-  }
-};

@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  & > div:nth-child(1) {
+  & > a:nth-child(1) {
     position: absolute;
     left: 20px;
   }

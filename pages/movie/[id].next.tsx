@@ -22,14 +22,10 @@ const Movie: NextPage = () => {
   const [comments, setComments] = useState<Array<CommentRequest>>();
   const [favorites, setFavorites] = useState<Array<FavoriteMovieRequest>>();
 
-  const { userInfo } = useUser();
-  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState<boolean>();
 
-  const isFav = favorites?.every(
-    (favorite) =>
-      favorite.userId === userInfo.id &&
-      favorite.movie.id === Number(router.query.id)
-  );
+  const router = useRouter();
+  const { userInfo } = useUser();
 
   const addMyFavoriteMovies = () => {
     if (favorites && movie) {
@@ -46,9 +42,7 @@ const Movie: NextPage = () => {
     }
   };
 
-  const removeMyFavoriteMovie = () => {
-    console.log("remove");
-  };
+  const removeMyFavoriteMovie = (index: number) => {};
 
   const createComment = (values: CommentRequest) => {
     if (comments && values) {
@@ -87,6 +81,19 @@ const Movie: NextPage = () => {
     setFavorites(JSON.parse(localStorage.getItem("favorites") || "[]"));
   }, []);
 
+  useEffect(() => {
+    favorites &&
+      favorites.length > 0 &&
+      setIsFavorite(() =>
+        favorites.every((favorite) =>
+          favorite.movie.id === Number(router.query.id) &&
+          favorite.userId === userInfo.id
+            ? true
+            : false
+        )
+      );
+  }, [favorites, userInfo]);
+
   return movie ? (
     <Main
       headerProps={{ title: `${movie.title}` }}
@@ -94,21 +101,19 @@ const Movie: NextPage = () => {
     >
       <Styled.Movie>
         <MovieCard {...movie} />
+
         <Styled.OtherOptions>
-          {favorites && (
-            <FavoriteMovie
-              isFavorite={favorites.every(
-                (favorite) =>
-                  favorite.userId === userInfo.id &&
-                  favorite.movie.id === Number(router.query.id)
-              )}
-              onAdd={addMyFavoriteMovies}
-              onRemove={removeMyFavoriteMovie}
-            />
-          )}
+          <FavoriteMovie
+            isFavorite={isFavorite || false}
+            onAdd={addMyFavoriteMovies}
+            onRemove={() => removeMyFavoriteMovie(1)}
+          />
+
           <SendEmail onSubmit={sendEmail} />
         </Styled.OtherOptions>
+
         <Comment onSubmit={createComment} />
+
         <b style={{ fontSize: 25 }}>Comments</b>
         {comments &&
         comments.length > 0 &&

@@ -1,9 +1,9 @@
 import { MovieProps } from "@/app/types";
 
 export interface FavoriteMovieProps {
+  isFavorite: boolean;
   onAdd: () => void;
   onRemove: () => void;
-  isFavorite: boolean;
 }
 
 export interface FavoriteMovieRequest {

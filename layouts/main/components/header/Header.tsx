@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { RiArrowDownSLine } from "react-icons/ri";
+import { AiFillHome } from "react-icons/ai";
 
 import useUser from "@/app/hooks/user";
 import { colors } from "@/constants/colors";
@@ -22,9 +24,11 @@ const Header: React.FunctionComponent<HeaderProps> = ({ title }) => {
   return (
     <Styled.Header>
       <Styled.Wrapper>
-        <div>
-          <img src="/favicon.ico" alt="favicon" width={40} />
-        </div>
+        <Link href="/home">
+          <a>
+            <AiFillHome size={30} />
+          </a>
+        </Link>
         <b>{title}</b>
         <Styled.Menu>
           <Styled.Profile onClick={() => setIsActive(!isActive)}>
@@ -33,7 +37,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ title }) => {
           </Styled.Profile>
           {isActive && (
             <Styled.Dropdown>
-              <button onClick={() => router.push("/my-favorites")}>
+              <button onClick={() => router.push("/my-favorite-movies")}>
                 My Favorite TV Shows
               </button>
               <button onClick={handleLogout}>Logout</button>

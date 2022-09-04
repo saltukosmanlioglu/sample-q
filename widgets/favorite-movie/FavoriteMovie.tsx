@@ -13,6 +13,8 @@ const FavoriteMovie: React.FunctionComponent<FavoriteMovieProps> = ({
 }) => {
   const [isActive, setIsActive] = useState<boolean>(isFavorite);
 
+  console.log("isActive", isActive);
+
   const handleClick = useCallback(() => {
     if (isActive) {
       onRemove?.();
@@ -21,7 +23,7 @@ const FavoriteMovie: React.FunctionComponent<FavoriteMovieProps> = ({
       onAdd?.();
       setIsActive(true);
     }
-  }, [isActive]);
+  }, []);
 
   return (
     <Styled.FavoriteMovie isActive={isActive} onClick={handleClick}>
