@@ -9,7 +9,7 @@ export const OtherOptions = styled.div`
   justify-content: flex-end;
   margin-top: 20px;
 
-  & > :last-child {
-    margin-left: 20px;
+  & > :first-child {
+    margin-right: 20px;
   }
 `;

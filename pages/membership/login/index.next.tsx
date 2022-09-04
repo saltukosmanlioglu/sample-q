@@ -6,6 +6,7 @@ import { BiLogIn } from "react-icons/bi";
 
 import { localStorageSetItem } from "@/app/funcs/local-storage";
 import useForm from "@/app/hooks/form";
+import { UserProps } from "@/app/types";
 import Button from "@/components/button";
 import TextField from "@/components/text-field";
 import Membership from "layouts/membership";
@@ -15,7 +16,8 @@ import { LoginRequest } from "./types";
 import * as Styled from "./Login.styled";
 
 const Login: NextPage = () => {
-  const [users, setUsers] = useState<Array<any>>();
+  const [users, setUsers] = useState<Array<UserProps>>();
+
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
 
   const router = useRouter();
@@ -38,15 +40,15 @@ const Login: NextPage = () => {
         });
         router.push("/home");
       } else {
-        console.log("hata");
         setPopupVisible(true);
       }
     });
   };
 
-  useEffect(() => {
-    setUsers(JSON.parse(localStorage.getItem("users") as any));
-  }, []);
+  useEffect(
+    () => setUsers(JSON.parse(localStorage.getItem("users") || "[]")),
+    []
+  );
 
   return (
     <Membership pageTitle="Login - Q">
