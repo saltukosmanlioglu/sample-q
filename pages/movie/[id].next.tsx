@@ -22,14 +22,16 @@ const Movie: NextPage = () => {
   const [comments, setComments] = useState<Array<CommentRequest>>();
   const [favorites, setFavorites] = useState<Array<FavoriteMovieRequest>>();
 
-  const [isFavorite, setIsFavorite] = useState<boolean>();
-
   const router = useRouter();
   const { userInfo } = useUser();
 
   const addMyFavoriteMovies = () => {
     if (favorites && movie) {
       favorites.push({
+        id: `${Math.floor(Math.random() * 1000)}-${userInfo.username.substring(
+          0,
+          4
+        )}-${router.query.id}-${movie.vote_average.toString().substring(0, 3)}`,
         createdDate: new Date().toLocaleDateString(),
         movie,
         userId: userInfo.id,
@@ -42,7 +44,20 @@ const Movie: NextPage = () => {
     }
   };
 
-  const removeMyFavoriteMovie = (index: number) => {};
+  const removeMyFavoriteMovie = (id: string) => {
+    if (favorites) {
+      const favoriteId = favorites.findIndex((favorite) => favorite.id === id);
+      const newData = [
+        ...favorites.slice(0, favoriteId),
+        ...favorites.slice(favoriteId + 1),
+      ];
+
+      localStorageSetItem({
+        key: "favorites",
+        value: [...newData],
+      });
+    }
+  };
 
   const createComment = (values: CommentRequest) => {
     if (comments && values) {
@@ -81,22 +96,7 @@ const Movie: NextPage = () => {
     setFavorites(JSON.parse(localStorage.getItem("favorites") || "[]"));
   }, []);
 
-  useEffect(() => {
-    favorites &&
-      favorites.length > 0 &&
-      setIsFavorite(() =>
-        favorites.every((favorite) =>
-          favorite.movie.id === Number(router.query.id) &&
-          favorite.userId === userInfo.id
-            ? true
-            : false
-        )
-      );
-      console.log(process.env.NEXT_PUBLIC_LOCAL_API, "spakojdihas");
-  }, [favorites, userInfo]);
-
-
-  return movie ? (
+  return comments && favorites && movie && userInfo ? (
     <Main
       headerProps={{ title: `${movie.title}` }}
       pageTitle={`${movie.title} - Q`}
@@ -105,11 +105,13 @@ const Movie: NextPage = () => {
         <MovieCard {...movie} />
 
         <Styled.OtherOptions>
-          <FavoriteMovie
-            isFavorite={isFavorite || false}
-            onAdd={addMyFavoriteMovies}
-            onRemove={() => removeMyFavoriteMovie(1)}
-          />
+          {favorites.find(
+            (favorite) =>
+              favorite.movie.id === Number(router.query.id) &&
+              favorite.userId === userInfo.id
+          ) ? null : (
+            <FavoriteMovie onAdd={addMyFavoriteMovies} />
+          )}
 
           <SendEmail onSubmit={sendEmail} />
         </Styled.OtherOptions>
@@ -117,8 +119,7 @@ const Movie: NextPage = () => {
         <Comment onSubmit={createComment} />
 
         <b style={{ fontSize: 25 }}>Comments</b>
-        {comments &&
-        comments.length > 0 &&
+        {comments.length > 0 &&
         comments.find(
           (comment) => comment.movieId === Number(router.query.id)
         ) ? (

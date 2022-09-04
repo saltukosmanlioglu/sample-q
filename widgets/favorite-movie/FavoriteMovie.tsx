@@ -1,35 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
-
-import { colors } from "@/constants/colors";
 
 import { FavoriteMovieProps } from "./types";
 import * as Styled from "./FavoriteMovie.styled";
 
 const FavoriteMovie: React.FunctionComponent<FavoriteMovieProps> = ({
-  isFavorite,
   onAdd,
-  onRemove,
 }) => {
-  const [isActive, setIsActive] = useState<boolean>(isFavorite);
+  const [isActive, setIsActive] = useState(true);
 
-  console.log("isActive", isActive);
+  const handleClick = () => {
+    setIsActive(false);
+    onAdd();
+  };
 
-  const handleClick = useCallback(() => {
-    if (isActive) {
-      onRemove?.();
-      setIsActive(false);
-    } else {
-      onAdd?.();
-      setIsActive(true);
-    }
-  }, []);
-
-  return (
-    <Styled.FavoriteMovie isActive={isActive} onClick={handleClick}>
-      <AiFillStar color={isActive ? "#fff" : colors.mainColor} size={30} />
+  return isActive ? (
+    <Styled.FavoriteMovie onClick={handleClick}>
+      <AiFillStar size={30} />
     </Styled.FavoriteMovie>
-  );
+  ) : null;
 };
 
 export default FavoriteMovie;
