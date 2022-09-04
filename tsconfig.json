@@ -18,6 +18,7 @@
     "paths": {
       "@/app/*": ["app/*"],
       "@/constants/*": ["constants/*"],
+      "@/core/*": ["core/*"],
       "@/components/*": ["components/*"],
       "@/layout/*": ["layout/*"],
       "@/pages/*": ["pages/*"],
