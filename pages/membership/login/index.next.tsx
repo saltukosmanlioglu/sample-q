@@ -4,15 +4,15 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { BiLogIn } from "react-icons/bi";
 
+import { localStorageSetItem } from "@/app/funcs/local-storage";
 import useForm from "@/app/hooks/form";
 import Button from "@/components/button";
 import TextField from "@/components/text-field";
-import Membership from "@/layout/membership";
+import Membership from "layouts/membership";
 import Popup from "@/widgets/popup";
 
 import { LoginRequest } from "./types";
 import * as Styled from "./Login.styled";
-import { localStorageSetItem } from "@/app/funcs/local-storage";
 
 const Login: NextPage = () => {
   const [users, setUsers] = useState<Array<any>>();

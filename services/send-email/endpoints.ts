@@ -1,4 +1,4 @@
-import service from "../locale-instance";
+import service from "@/services/locale-instance";
 
 import { SendEmailRequest } from "./types";
 

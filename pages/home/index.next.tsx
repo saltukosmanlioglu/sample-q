@@ -5,7 +5,7 @@ import { MovieProps } from "@/app/types";
 import MovieCard from "@/components/movie-card";
 import TextField from "@/components/text-field";
 import { movies } from "@/constants/movies";
-import Main from "@/layout/main";
+import Main from "@/layouts/main";
 
 import * as Styled from "./Home.styled";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 
-import Header from "@/layout/main/components/header";
-import Footer from "@/layout/main/components/footer";
+import Header from "@/layouts/main/components/header";
+import Footer from "@/layouts/main/components/footer";
 
 import { MainProps } from "./types";
 import * as Styled from "./Main.styled";

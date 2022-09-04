@@ -1,5 +1,6 @@
-import { colors } from "@/constants/colors";
 import styled from "styled-components";
+
+import { colors } from "@/constants/colors";
 
 export const Header = styled.header`
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HeaderProps } from "./components/header";
+import { HeaderProps } from "layouts/main/components/header";
 
 export interface MainProps {
   children: React.ReactNode;

@@ -6,7 +6,7 @@ import { localStorageSetItem } from "@/app/funcs/local-storage";
 import useUser from "@/app/hooks/user";
 import { MovieProps } from "@/app/types";
 import { movies } from "@/constants/movies";
-import Main from "@/layout/main";
+import Main from "@/layouts/main";
 import sendEmailService, { SendEmailRequest } from "@/services/send-email";
 import Comment, { CommentRequest } from "@/widgets/comment";
 import CommentMade from "@/widgets/comment-made";

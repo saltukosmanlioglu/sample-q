@@ -17,10 +17,10 @@
     "baseUrl": ".",
     "paths": {
       "@/app/*": ["app/*"],
+      "@/components/*": ["components/*"],
       "@/constants/*": ["constants/*"],
       "@/core/*": ["core/*"],
-      "@/components/*": ["components/*"],
-      "@/layout/*": ["layout/*"],
+      "@/layouts/*": ["layouts/*"],
       "@/pages/*": ["pages/*"],
       "@/public/*": ["public/*"],
       "@/services/*": ["services/*"],

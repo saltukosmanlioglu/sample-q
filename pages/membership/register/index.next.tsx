@@ -7,7 +7,7 @@ import { localStorageSetItem } from "@/app/funcs/local-storage";
 import useForm from "@/app/hooks/form";
 import Button from "@/components/button";
 import TextField from "@/components/text-field";
-import Membership from "@/layout/membership";
+import Membership from "@/layouts/membership";
 
 import { LoginRequest } from "./types";
 import * as Styled from "./Register.styled";

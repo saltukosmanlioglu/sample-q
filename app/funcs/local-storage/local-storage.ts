@@ -1,4 +1,4 @@
-import { LocalStorageGetItemProps, KeyValueProps } from "./types";
+import { KeyValueProps } from "./types";
 
 export const localStorageSetItem = ({ key, value }: KeyValueProps) => {
   try {
@@ -8,7 +8,7 @@ export const localStorageSetItem = ({ key, value }: KeyValueProps) => {
   }
 };
 
-export const localStorageGetItem = ({ key }: LocalStorageGetItemProps) => {
+export const localStorageGetItem = ({ key }: Pick<KeyValueProps, "key">) => {
   try {
     localStorage.getItem(key);
   } catch (error) {
