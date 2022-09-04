@@ -92,7 +92,9 @@ const Movie: NextPage = () => {
             : false
         )
       );
+      console.log(process.env.NEXT_PUBLIC_LOCAL_API, "spakojdihas");
   }, [favorites, userInfo]);
+
 
   return movie ? (
     <Main
