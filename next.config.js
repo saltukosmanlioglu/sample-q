@@ -2,7 +2,6 @@
 const nextConfig = {
   env: {
     NEXT_APP_API: "https://api.themoviedb.org/4/list/1",
-    NEXT_APP_LOCAL_API: "http://localhost:3000/api/",
     NEXT_APP_CDN_API: "https://image.tmdb.org/t/p/w500",
   },
   reactStrictMode: true,
